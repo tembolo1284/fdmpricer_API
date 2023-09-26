@@ -42,8 +42,6 @@ This Python project contains various classes for finite difference methods relat
 
 ## Installation
 
-## Installation
-
 To set up the project environment and dependencies, follow these steps:
 
 1. Ensure you have Python 3.10 or higher installed on your system.
@@ -74,7 +72,7 @@ run the below if you need to put all installed packages into a file to then run 
 pip freeze > installed_packages.txt
 ```
 
-    run the below if you need to uninstall everything
+run the below if you need to uninstall everything
 
 ```
 Get-Content installed_packages.txt | ForEach-Object { pip uninstall -y $_ }
