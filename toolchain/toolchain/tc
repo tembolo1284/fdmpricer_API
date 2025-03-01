@@ -1,0 +1,43 @@
+#!/bin/bash
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+function show_help {
+    echo "Python Toolchain (tc) - Manage Python development environments"
+    echo ""
+    echo "Commands:"
+    echo "  setup    - Install the toolchain and dependencies"
+    echo "  dev      - Start a containerized development environment"
+    echo "  code     - Open VSCode with the development environment"
+    echo "  help     - Show this help message"
+    echo ""
+}
+
+if [ $# -eq 0 ]; then
+    show_help
+    exit 0
+fi
+
+COMMAND=$1
+shift
+
+case "$COMMAND" in
+    setup)
+        "$SCRIPT_DIR/scripts/setup.sh" "$@"
+        ;;
+    dev)
+        "$SCRIPT_DIR/scripts/dev.sh" "$@"
+        ;;
+    code)
+        "$SCRIPT_DIR/scripts/code.sh" "$@"
+        ;;
+    help)
+        show_help
+        ;;
+    *)
+        echo "Unknown command: $COMMAND"
+        show_help
+        exit 1
+        ;;
+esac
