@@ -5,6 +5,31 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TOOLCHAIN_DIR="$(dirname "$SCRIPT_DIR")"
 PROJECT_DIR="$(pwd)"
 
+function ensure_docker_running {
+    # Check if Docker daemon is running
+    if ! docker info &>/dev/null; then
+        echo "🐋 Docker daemon not running. Attempting to start it..."
+        if command -v systemctl &>/dev/null; then
+            # For systemd-based systems
+            sudo systemctl start docker || true
+        else
+            # For non-systemd systems
+            sudo service docker start || true
+        fi
+        
+        # Give it a moment to start
+        sleep 2
+        
+        # Check again
+        if ! docker info &>/dev/null; then
+            echo "⚠️ Could not start Docker daemon automatically."
+            echo "Please start it manually with: sudo service docker start"
+        else
+            echo "✅ Docker daemon started successfully."
+        fi
+    fi
+}
+
 echo "🔧 Setting up Python toolchain for: $PROJECT_DIR"
 
 # Check if Poetry is installed, install if not
@@ -17,6 +42,9 @@ fi
 if ! command -v docker &> /dev/null; then
     echo "⚠️ Docker is not installed. Please install Docker to use the containerized development environment."
     echo "📝 Visit https://docs.docker.com/get-docker/ for installation instructions."
+else
+    # Ensure Docker daemon is running
+    ensure_docker_running
 fi
 
 # Check if Docker Compose is installed

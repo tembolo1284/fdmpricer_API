@@ -3,6 +3,33 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+function ensure_docker_running {
+    # Check if Docker daemon is running
+    if ! docker info &>/dev/null; then
+        echo "🐋 Docker daemon not running. Attempting to start it..."
+        if command -v systemctl &>/dev/null; then
+            # For systemd-based systems
+            sudo systemctl start docker || true
+        else
+            # For non-systemd systems
+            sudo service docker start || true
+        fi
+        
+        # Give it a moment to start
+        sleep 2
+        
+        # Check again
+        if ! docker info &>/dev/null; then
+            echo "⚠️ Could not start Docker daemon automatically."
+            echo "Please start it manually with: sudo service docker start"
+            echo "Then run the command again."
+            exit 1
+        else
+            echo "✅ Docker daemon started successfully."
+        fi
+    fi
+}
+
 function show_help {
     echo "Python Toolchain (tc) - Manage Python development environments"
     echo ""
@@ -24,13 +51,15 @@ shift
 
 case "$COMMAND" in
     setup)
-        "$SCRIPT_DIR/scripts/setup.sh" "$@"
+        "$SCRIPT_DIR/toolchain/toolchain/scripts/setup.sh" "$@"
         ;;
     dev)
-        "$SCRIPT_DIR/scripts/dev.sh" "$@"
+        ensure_docker_running
+        "$SCRIPT_DIR/toolchain/toolchain/scripts/dev.sh" "$@"
         ;;
     code)
-        "$SCRIPT_DIR/scripts/code.sh" "$@"
+        ensure_docker_running
+        "$SCRIPT_DIR/toolchain/toolchain/scripts/code.sh" "$@"
         ;;
     help)
         show_help

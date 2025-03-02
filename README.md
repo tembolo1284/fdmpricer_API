@@ -77,3 +77,7 @@ run the below if you need to uninstall everything
 ```
 Get-Content installed_packages.txt | ForEach-Object { pip uninstall -y $_ }
 ```
+
+```
+http://172.31.251.140:8000/docs
+```
