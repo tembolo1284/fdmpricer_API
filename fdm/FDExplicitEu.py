@@ -1,6 +1,6 @@
 import numpy as np
 
-from .FiniteDifferences import FiniteDifferences
+from fdm.FiniteDifferences import FiniteDifferences
 
 class FDExplicitEu(FiniteDifferences):
 

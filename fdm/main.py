@@ -1,6 +1,6 @@
-from FDExplicitEu import FDExplicitEu
-from FDImplicitEu import FDImplicitEu
-from FDCnEu import FDCnEu
+from fdm.FDExplicitEu import FDExplicitEu
+from fdm.FDImplicitEu import FDImplicitEu
+from fdm.FDCnEu import FDCnEu
 
 def main():
     S0 = 50

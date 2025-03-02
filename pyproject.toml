@@ -5,6 +5,12 @@ description = "Finite Difference Method Option Pricer and API"
 authors = ["Paul Lopez <nik.lopez381@gmail.com>"]
 readme = "README.md"
 
+# Correctly formatted packages section
+packages = [
+    {include = "PricingAPI"},
+    {include = "fdm"}
+]
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
@@ -19,3 +25,9 @@ pydantic = ">=1.8.2"
 numpy = ">=1.21.2"
 requests = ">=2.26.0"
 scipy = ">=1.7.3"
+
+[tool.poetry.scripts]
+# API entry point
+pricing-api = "PricingAPI.main:start"
+# CLI/main entry point for the pricing module 
+fdm-pricer = "fdm.main:main"

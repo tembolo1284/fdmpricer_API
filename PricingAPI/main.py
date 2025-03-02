@@ -1,17 +1,16 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import Optional
 import logging, uvicorn
 
+from PricingAPI.app import app
 
-def main():
+
+def start():
     logging.basicConfig(
         format = '%(asctime)s [%(name)s] %(levelname)s: %(message)s',
         datefmt = '%Y-%m-%d %H:%M:%S',
         level = logging.INFO
     )
 
-    uvicorn.run("app:app")
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 if __name__ == "__main__":
-    main()
+    start()

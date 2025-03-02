@@ -1,7 +1,7 @@
 import numpy as np
 import scipy.linalg as linalg
 
-from .FDExplicitEu import FDExplicitEu
+from fdm.FDExplicitEu import FDExplicitEu
 
 class FDImplicitEu(FDExplicitEu):
     def _setup_coefficients_(self):
